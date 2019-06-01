@@ -76,11 +76,9 @@ final class GoogleMapController
   private final MarkersController markersController;
   private final PolylinesController polylinesController;
   private final CirclesController circlesController;
-  private final TileOverlayController tileOverlayController;
   private List<Object> initialMarkers;
   private List<Object> initialPolylines;
   private List<Object> initialCircles;
-  private Object initialTileOverlay;
 
   GoogleMapController(
       int id,
@@ -101,7 +99,6 @@ final class GoogleMapController
     this.markersController = new MarkersController(methodChannel);
     this.polylinesController = new PolylinesController(methodChannel);
     this.circlesController = new CirclesController(methodChannel);
-    this.tileOverlayController = new TileOverlayController(methodChannel);
   }
 
   @Override
@@ -178,7 +175,6 @@ final class GoogleMapController
     markersController.setGoogleMap(googleMap);
     polylinesController.setGoogleMap(googleMap);
     circlesController.setGoogleMap(googleMap);
-    tileOverlayController.setGoogleMap(googleMap);
     updateInitialMarkers();
     updateInitialPolylines();
     updateInitialCircles();
@@ -262,13 +258,6 @@ final class GoogleMapController
           result.success(null);
           break;
         }
-      case "tileOverlay#update":
-      {
-        Object tileOverlayToSet = call.arguments();
-        tileOverlayController.setTileOverlay(tileOverlayToSet);
-        result.success(null);
-        break;
-      }
       case "map#isCompassEnabled":
         {
           result.success(googleMap.getUiSettings().isCompassEnabled());
@@ -526,6 +515,18 @@ final class GoogleMapController
 
   private void updateInitialTileOverlay() {
     tileOverlayController.setTileOverlay(initialTileOverlay);
+  }
+
+  @Override
+  public void setInitialPolygons(Object initialPolygons) {
+    this.initialPolygons = (List<Object>) initialPolygons;
+    if (googleMap != null) {
+      updateInitialPolygons();
+    }
+  }
+
+  private void updateInitialPolygons() {
+    polygonsController.addPolygons(initialPolygons);
   }
 
   @Override
