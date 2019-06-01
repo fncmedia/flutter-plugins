@@ -35,4 +35,6 @@ interface GoogleMapOptionsSink {
   void setInitialPolylines(Object initialPolylines);
 
   void setInitialCircles(Object initialCircles);
+
+  void setInitialTileOverlay(Object initialTileLayers);
 }

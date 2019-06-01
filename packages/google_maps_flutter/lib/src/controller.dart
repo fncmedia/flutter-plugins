@@ -147,7 +147,20 @@ class GoogleMapController {
     );
   }
 
-  /// Starts an animated change of the map camera position.
+  Future<void> _updateTileOverlay(TileOverlay tileOverlay) async {
+    //assert(tileOverlay != null);
+    // TODO(amirh): remove this on when the invokeMethod update makes it to stable Flutter.
+    // https://github.com/flutter/flutter/issues/26431
+    // ignore: strong_mode_implicit_dynamic_method
+    await channel.invokeMethod(
+      'tileOverlay#update',
+      tileOverlay != null ? tileOverlay._toJson(): false,
+    );
+  }
+
+
+
+    /// Starts an animated change of the map camera position.
   ///
   /// The returned [Future] completes after the change has been started on the
   /// platform side.

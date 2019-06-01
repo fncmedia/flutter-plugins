@@ -19,6 +19,7 @@ class GoogleMapBuilder implements GoogleMapOptionsSink {
   private Object initialMarkers;
   private Object initialPolylines;
   private Object initialCircles;
+  private Object initialTileOverlay;
 
   GoogleMapController build(
       int id, Context context, AtomicInteger state, PluginRegistry.Registrar registrar) {
@@ -31,6 +32,7 @@ class GoogleMapBuilder implements GoogleMapOptionsSink {
     controller.setInitialMarkers(initialMarkers);
     controller.setInitialPolylines(initialPolylines);
     controller.setInitialCircles(initialCircles);
+    controller.setInitialTileOverlay(initialTileOverlay);
     return controller;
   }
 
@@ -111,5 +113,10 @@ class GoogleMapBuilder implements GoogleMapOptionsSink {
   @Override
   public void setInitialCircles(Object initialCircles) {
     this.initialCircles = initialCircles;
+  }
+
+  @Override
+  public void setInitialTileOverlay(Object initialTileOverlay) {
+    this.initialTileOverlay = initialTileOverlay;
   }
 }

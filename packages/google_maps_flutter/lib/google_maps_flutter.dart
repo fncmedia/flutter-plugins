@@ -29,3 +29,4 @@ part 'src/polyline_updates.dart';
 part 'src/circle.dart';
 part 'src/circle_updates.dart';
 part 'src/ui.dart';
+part 'src/tile_layer.dart';

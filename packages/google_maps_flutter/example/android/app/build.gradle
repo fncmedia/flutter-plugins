@@ -41,7 +41,8 @@ android {
     }
 
     defaultConfig {
-        manifestPlaceholders = [mapsApiKey: "$System.env.MAPS_API_KEY"]
+        //manifestPlaceholders = [mapsApiKey: "$System.env.MAPS_API_KEY"]
+        manifestPlaceholders = [mapsApiKey: "AIzaSyDGwcabVfkga6be3i09CLQWAaOFGcUW9-A"]
     }
 
     buildTypes {

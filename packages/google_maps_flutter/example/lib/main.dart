@@ -5,6 +5,7 @@
 import 'package:flutter/material.dart';
 import 'animate_camera.dart';
 import 'map_coordinates.dart';
+import 'map_tile_layer.dart';
 import 'map_ui.dart';
 import 'marker_icons.dart';
 import 'move_camera.dart';
@@ -16,6 +17,7 @@ import 'scrolling_map.dart';
 
 final List<Page> _allPages = <Page>[
   MapUiPage(),
+  MapTileLayerPage(),
   MapCoordinatesPage(),
   AnimateCameraPage(),
   MoveCameraPage(),

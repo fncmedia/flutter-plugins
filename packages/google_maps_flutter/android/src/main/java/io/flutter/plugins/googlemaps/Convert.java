@@ -460,6 +460,26 @@ class Convert {
     }
   }
 
+  static void interpretTileOverlayOptions(Object o, TileOverlayOptionsSink sink) {
+    final Map<?, ?> data = toMap(o);
+
+    final Object baseUrl = data.get("baseUrl");
+    if (baseUrl != null) {
+      sink.setBaseUrl(toString(baseUrl));
+    }
+
+    final Object color = data.get("color");
+    if (color != null) {
+      sink.setColor(toInt(color));
+    }
+
+    final Object headers = data.get("headers");
+    if (headers != null) {
+      sink.setHeaders((Map<String,String>)(headers));
+    }
+
+  }
+
   private static List<LatLng> toPoints(Object o) {
     final List<?> data = toList(o);
     final List<LatLng> points = new ArrayList<>(data.size());

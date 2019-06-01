@@ -30,6 +30,7 @@ class GoogleMap extends StatefulWidget {
     this.tiltGesturesEnabled = true,
     this.myLocationEnabled = false,
     this.myLocationButtonEnabled = true,
+    this.tileOverlay,
     this.markers,
     this.polylines,
     this.circles,
@@ -153,6 +154,8 @@ class GoogleMap extends StatefulWidget {
   /// were not claimed by any other gesture recognizer.
   final Set<Factory<OneSequenceGestureRecognizer>> gestureRecognizers;
 
+  final TileOverlay tileOverlay;
+
   @override
   State createState() => _GoogleMapState();
 }
@@ -164,6 +167,7 @@ class _GoogleMapState extends State<GoogleMap> {
   Map<MarkerId, Marker> _markers = <MarkerId, Marker>{};
   Map<PolylineId, Polyline> _polylines = <PolylineId, Polyline>{};
   Map<CircleId, Circle> _circles = <CircleId, Circle>{};
+  TileOverlay _tileOverlay;
   _GoogleMapOptions _googleMapOptions;
 
   @override
@@ -174,6 +178,7 @@ class _GoogleMapState extends State<GoogleMap> {
       'markersToAdd': _serializeMarkerSet(widget.markers),
       'polylinesToAdd': _serializePolylineSet(widget.polylines),
       'circlesToAdd': _serializeCircleSet(widget.circles),
+      'tileOverlayToSet': _serializeTileOverlay(widget.tileOverlay),
     };
     if (defaultTargetPlatform == TargetPlatform.android) {
       return AndroidView(
@@ -204,6 +209,7 @@ class _GoogleMapState extends State<GoogleMap> {
     _markers = _keyByMarkerId(widget.markers);
     _polylines = _keyByPolylineId(widget.polylines);
     _circles = _keyByCircleId(widget.circles);
+    _tileOverlay = widget.tileOverlay;
   }
 
   @override
@@ -213,6 +219,7 @@ class _GoogleMapState extends State<GoogleMap> {
     _updateMarkers();
     _updatePolylines();
     _updateCircles();
+    _updateTileOverlay();
   }
 
   void _updateOptions() async {
@@ -246,6 +253,12 @@ class _GoogleMapState extends State<GoogleMap> {
     controller._updateCircles(
         _CircleUpdates.from(_circles.values.toSet(), widget.circles));
     _circles = _keyByCircleId(widget.circles);
+  }
+
+  void _updateTileOverlay() async {
+    final GoogleMapController controller = await _controller.future;
+    controller._updateTileOverlay(widget.tileOverlay);
+    _tileOverlay = widget.tileOverlay;
   }
 
   Future<void> onPlatformViewCreated(int id) async {
